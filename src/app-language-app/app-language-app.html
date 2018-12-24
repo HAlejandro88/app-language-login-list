@@ -1,0 +1,108 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/language-element/language-element.html">
+<link rel="import" href="../../bower_components/cards-component/cards-component.html">
+<link rel="import" href="../../bower_components/login-component/login-component.html">
+<link rel="import" href="../../bower_components/practica1-element/practica1-element.html">
+<link rel="import" href="../../bower_components/practica2-element/practica2-element.html">
+<link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
+
+
+<dom-module id="app-language-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      paper-toast {
+         --paper-toast-background-color: red;
+         --paper-toast-color: blue;
+      }
+      paper-toast{
+        width: 40%;
+        margin-left: 50px;
+        margin-right: 50px;
+      }
+      paper-button{
+        border-radius: 50px;
+        color: rgb(32, 169, 211);
+        background: rgb(73, 1, 145);
+      }
+      .content{
+        width: 40%;
+        height: 60%;
+      }
+    </style>
+    <h2>[[local.title]]</h2>
+    <div class="content">
+      <paper-toast id="toast" class="fit-bottom"></paper-toast>
+      <language-element source="src/locales" on-language-changed="changeLanguage"></language-element>
+      <div hidden$="[[!logged]]">
+          <practica2-element users="[[users]]"></practica2-element>
+          <paper-button on-tap="logout">[[local.Sign]]</paper-button>
+      </div>
+      <div hidden$="[[logged]]">
+          <practica1-element on-login-user="login" on-register-user="signin" on-language-see="changeLanguage"></practica1-element>
+      </div>
+  </div>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class AppLanguageApp extends Polymer.Element {
+      static get is() { return 'app-language-app'; }
+      static get properties() {
+        return {
+          users: {
+            type: Array,
+            value: []
+          },
+          logged: {
+            type: Boolean,
+            value: false
+          },
+          local: {
+            type: Object,
+            value: {
+              title: '',
+              Sign: '',
+              Sign: '',
+              noAccountText: '',
+              noAccountBtn: '',
+              push:''
+            },
+            
+          }
+        };
+      }
+      signin(event) {
+        const user = event.detail;
+        this.push('users', user);
+      }
+
+      logout() {
+        this.set('logged', false);
+      }
+
+      login(event) {
+        const loading = event.detail;
+        const concatenate = this.users.filter(user => user.username === loading.username && user.password === loading.password);
+        if (concatenate.length === 1) {
+          this.set('logged', true);
+        } else {
+          alert('Usuario y/o contraseña invalida');
+          this.$.toast.show();
+        }
+      }
+
+      changeLanguage(event) {
+        this.set('local', event.detail.data);
+      }
+
+    }
+
+    window.customElements.define(AppLanguageApp.is, AppLanguageApp);
+  </script>
+</dom-module>

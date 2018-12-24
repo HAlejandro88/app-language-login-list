@@ -1,0 +1,17 @@
+{
+  "name": "app-language",
+  "main": "index.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^2.0.0",
+    "language-element": "HAlejandro88/language-element",
+    "paper-toast": "PolymerElements/paper-toast#2.1.2",
+    "cards-component": "alfonsorios96/cards-component",
+    "login-component": "alfonsorios96/login-component",
+    "practica2-element": "HAlejandro88/cards",
+    "practica1-element": "HAlejandro88/login-element"
+  },
+  "devDependencies": {
+    "web-component-tester": "Polymer/web-component-tester#^6.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0"
+  }
+}

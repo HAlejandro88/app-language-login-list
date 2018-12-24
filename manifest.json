@@ -1,0 +1,6 @@
+{
+  "name": "app-language",
+  "short_name": "app-language",
+  "start_url": "/",
+  "display": "standalone"
+}
